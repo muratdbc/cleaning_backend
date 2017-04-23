@@ -1,5 +1,6 @@
 class JobsController < ApplicationController
-  
+  def main
+  end
   def create
     job = Job.new(job_params)
 
