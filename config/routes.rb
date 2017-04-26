@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get  'jobs', to: 'jobs#index'
   get  'jobs/:id',  to: 'jobs#show'
 
+  get '/jobs-sync', to: 'jobsync#sync'
+
   post 'password/forgot', to: 'password#forgot'
   post 'password/reset', to: 'password#reset'
   put 'password/update', to: 'password#update'

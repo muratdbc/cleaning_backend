@@ -21,6 +21,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'jwt'
 
+gem 'icalendar'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

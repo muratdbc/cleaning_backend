@@ -75,4 +75,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Sync job config file
+  config.rentlever_job_snyc_domain='https://api.rentlever.com/user/1462269716/icalendar.ics'
 end
