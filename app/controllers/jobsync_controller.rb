@@ -4,5 +4,7 @@ class JobsyncController < ApplicationController
   def sync
     icalendar=JobSync.get_icalendar
     events_array=ExternalCalendar.convert_to_array_of_events(icalendar)
+    future_events=ExternalCalendar.future_events(events_array)
+    ExternalCalendar.process_events(future_events)
   end
 end

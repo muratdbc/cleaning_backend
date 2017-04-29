@@ -12,11 +12,40 @@ class ExternalCalendar
   end
   def self.to_hash(event)
     calendar_hash={}
-    calendar_hash["startDate"]=event.dtstart.to_date
-    calendar_hash["endDate"]=event.dtend.to_date
+    calendar_hash["start_date"]=event.dtstart.to_date
+    calendar_hash["end_date"]=event.dtend.to_date
     calendar_hash["summary"]=event.summary
     calendar_hash["location"]=event.location
     calendar_hash["description"]=event.description
+    calendar_hash["external_key"]= event.description.match(/KEY: \S{8}/)[0].split(":")[1].strip rescue "XXXXXXXX"
     return calendar_hash
+  end
+  def self.future_events(events)
+      t = Time.now
+      events.inject([]) {|future,e| e["start_date"] > t ? future.push(e) : future}
+  end
+  def self.process_events(events)
+    Job.where(:external_source => 'RENTLEVER').where("job_date > ?",Time.now).update_all('is_deleted=true')
+    # Find all the jobs that are in the future from this calendar and make them is_active=false
+    p events
+    events.each do  |e|
+      job=Job.where(:external_key => e["external_key"])[0]
+      p job.nil?
+      if(job.nil?)
+        Job.create({:job_date=>e["start_date"],:notes =>e["summary"],
+        :location =>e["location"],:access_code =>e["description"],
+        :external_key =>e["external_key"],:external_source =>"RENTLEVER"})
+      else
+        p "there"
+        job["is_deleted"]=false
+        job["updated_at"]=Time.now
+        job["job_date"]=e["start_date"]
+        job["notes"]= e["summary"]
+        job["location"] = e["location"]
+        job["access_code"] = e["description"]
+        job.save!
+        # update is_deleted and updated_at
+      end
+    end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170422184618) do
+ActiveRecord::Schema.define(version: 20170428063542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,8 +23,13 @@ ActiveRecord::Schema.define(version: 20170422184618) do
     t.text     "access_code"
     t.text     "wifi_name"
     t.text     "wifi_password"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "external_key"
+    t.string   "external_source"
+    t.boolean  "is_active",       default: true
+    t.boolean  "is_deleted",      default: false
+    t.string   "location"
   end
 
   create_table "users", force: :cascade do |t|
