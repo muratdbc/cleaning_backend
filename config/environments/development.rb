@@ -38,7 +38,7 @@ Rails.application.configure do
   config.active_record.migration_error = :page_load
 
   # Sync job config file
-  config.rentlever_job_snyc_domain='https://api.test.rentlever.com/user/1462269716/icalendar.ics'
+  config.rentlever_job_snyc_domain='https://api.rentlever.com/user/1462269716/icalendar.ics'
 
 
   # Raises error for missing translations
@@ -47,4 +47,6 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  config.reload_classes_only_on_change = false
 end

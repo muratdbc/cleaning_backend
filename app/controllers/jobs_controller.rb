@@ -19,6 +19,16 @@ class JobsController < ApplicationController
     render json: {job: job}, status: :ok
   end
 
+  def update
+  end
+
+  def destroy
+    job=Job.find(params[:id])
+    job.is_deleted=true
+    updated_count=job.save!
+    render json: {is_updated: updated_count}, status: :ok
+  end
+
   private
 
   def job_params

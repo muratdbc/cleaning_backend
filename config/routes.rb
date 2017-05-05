@@ -7,10 +7,7 @@ Rails.application.routes.draw do
       post 'email_update'
     end
   end
-  get  '/',  to: 'jobs#main'
-  post 'jobs', to: 'jobs#create'
-  get  'jobs', to: 'jobs#index'
-  get  'jobs/:id',  to: 'jobs#show'
+  resources :jobs
 
   get '/jobs-sync', to: 'jobsync#sync'
 
